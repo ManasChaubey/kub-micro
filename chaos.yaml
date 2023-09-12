@@ -1,10 +1,16 @@
 apiVersion: chaos-mesh.org/v1alpha1
-kind: PodChaos
+kind: StressChaos
 metadata:
-  name: pod-chaos-demo2
+  name: mem-stress
+  namespace: default
 spec:
-  action: pod-kill
+  mode: all
   selector:
-    labelSelectors:
-      app.kubernetes.io/instance: deployment-1
-  mode: one
+    namespaces:
+      - Default
+  stressors:
+    memory:
+      workers: 4
+      size: 50MiB
+      options: ['']
+  duration: '1h'
